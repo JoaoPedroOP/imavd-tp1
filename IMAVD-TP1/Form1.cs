@@ -10,11 +10,31 @@ using System.Windows.Forms;
 
 namespace IMAVD_TP1
 {
-    public partial class Form1 : Form
+    public partial class UI : Form
     {
-        public Form1()
+        public UI()
         {
             InitializeComponent();
+        }
+
+        private void rEDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void imgLoadBtn_Click(object sender, EventArgs e)
+        {
+            var openFile = new OpenFileDialog();
+
+            if(openFile.ShowDialog() == DialogResult.OK) {
+                imageBox.Image = new Bitmap(openFile.FileName);
+            }
+
         }
     }
 }
