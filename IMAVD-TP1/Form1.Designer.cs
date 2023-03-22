@@ -59,6 +59,12 @@
             this.button3 = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.imgHorResCounter = new System.Windows.Forms.NumericUpDown();
+            this.imgVertResCounter = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip2.SuspendLayout();
@@ -66,6 +72,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgHorResCounter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgVertResCounter)).BeginInit();
             this.SuspendLayout();
             // 
             // imgLoadBtn
@@ -104,7 +113,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(776, 365);
+            this.groupBox1.Location = new System.Drawing.Point(979, 72);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(144, 188);
             this.groupBox1.TabIndex = 3;
@@ -149,7 +158,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(776, 279);
+            this.button2.Location = new System.Drawing.Point(975, 344);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(152, 46);
             this.button2.TabIndex = 4;
@@ -172,7 +181,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Location = new System.Drawing.Point(0, 28);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(944, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1135, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -183,7 +192,7 @@
             this.opcaiToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(944, 28);
+            this.menuStrip2.Size = new System.Drawing.Size(1135, 28);
             this.menuStrip2.TabIndex = 8;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -306,7 +315,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(780, 214);
+            this.button3.Location = new System.Drawing.Point(975, 279);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(148, 46);
             this.button3.TabIndex = 15;
@@ -327,18 +336,77 @@
             // 
             this.groupBox2.Controls.Add(this.checkBox1);
             this.groupBox2.Controls.Add(this.imgLoadBtn);
-            this.groupBox2.Location = new System.Drawing.Point(770, 87);
+            this.groupBox2.Location = new System.Drawing.Point(776, 72);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(167, 101);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Load Image";
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.label10);
+            this.groupBox5.Controls.Add(this.label12);
+            this.groupBox5.Controls.Add(this.imgHorResCounter);
+            this.groupBox5.Controls.Add(this.imgVertResCounter);
+            this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(776, 396);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(347, 153);
+            this.groupBox5.TabIndex = 18;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Image";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(20, 116);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(93, 29);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "Vertical";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(110, 30);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(128, 29);
+            this.label10.TabIndex = 4;
+            this.label10.Text = "Resolution";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(6, 71);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(121, 29);
+            this.label12.TabIndex = 19;
+            this.label12.Text = "Horizontal";
+            // 
+            // imgHorResCounter
+            // 
+            this.imgHorResCounter.Location = new System.Drawing.Point(197, 69);
+            this.imgHorResCounter.Name = "imgHorResCounter";
+            this.imgHorResCounter.Size = new System.Drawing.Size(129, 34);
+            this.imgHorResCounter.TabIndex = 17;
+            // 
+            // imgVertResCounter
+            // 
+            this.imgVertResCounter.Location = new System.Drawing.Point(197, 109);
+            this.imgVertResCounter.Name = "imgVertResCounter";
+            this.imgVertResCounter.Size = new System.Drawing.Size(129, 34);
+            this.imgVertResCounter.TabIndex = 18;
+            // 
             // UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 584);
+            this.ClientSize = new System.Drawing.Size(1135, 561);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label8);
@@ -365,6 +433,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgHorResCounter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgVertResCounter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -403,6 +475,12 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.NumericUpDown imgHorResCounter;
+        private System.Windows.Forms.NumericUpDown imgVertResCounter;
     }
 }
 
