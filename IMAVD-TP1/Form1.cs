@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMAVD_TP1.DTO;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -8,6 +9,7 @@ namespace IMAVD_TP1
     public partial class UI : Form
     {
         private Bitmap originalImage;
+        private ColorSearchDTO colorSearchInfo;
 
         public UI()
         {
@@ -117,7 +119,15 @@ namespace IMAVD_TP1
                     Color selectedColor = colorSearchDialog.Color;
                     if (selectedColor != null)
                     {
-                        ImageSearcher.searchColor(this.imageBox.Image,selectedColor);
+                        colorSearchInfo = ImageSearcher.searchColor(this.imageBox.Image,selectedColor);
+
+                        colorExistsLabel.Visible = true;
+                        if (colorSearchInfo.colorExists) {
+                            colorExistsLabel.Text = "Color Found!";
+                        }else colorExistsLabel.Text = "Color NOT Found!";
+                        
+                        nrPixelsWithColorLabel.Visible = true;
+                        nrPixelsWithColorLabel.Text = colorSearchInfo.numberOfSameColorPixels.ToString();
                     }
                 }
             }

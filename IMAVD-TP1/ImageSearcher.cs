@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IMAVD_TP1.DTO;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,17 +12,15 @@ namespace IMAVD_TP1
 {
     internal class ImageSearcher
     {
-        internal static void searchColor(Image originalImage, Color selectedColor)
+        internal static ColorSearchDTO searchColor(Image originalImage, Color selectedColor)
         {
             var resultBitmap = new Bitmap(originalImage.Width, originalImage.Height);
+            var colorSearchInfo = new ColorSearchDTO();
 
             using (Graphics graphics = Graphics.FromImage(resultBitmap))
             {
                 graphics.DrawImage(originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height));
             }
-
-            int numberOfSameColorPixels = 0;
-            bool colorExists = false;
 
             for (int y = 0; y < resultBitmap.Height; y++)
             {
@@ -31,17 +30,18 @@ namespace IMAVD_TP1
 
                     if(pixelColor == selectedColor)
                     {
-                        numberOfSameColorPixels++;
+                        colorSearchInfo.numberOfSameColorPixels++;
                     }
                
                 }
             }
 
-            if(numberOfSameColorPixels > 0)
+            if(colorSearchInfo.numberOfSameColorPixels > 0)
             {
-                colorExists = true;
+                colorSearchInfo.colorExists = true;
             }
 
+            return colorSearchInfo;
         }
     }
 }

@@ -527,7 +527,7 @@
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Location = new System.Drawing.Point(967, 424);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(366, 139);
+            this.groupBox3.Size = new System.Drawing.Size(378, 139);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Color Search";
@@ -536,7 +536,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(18, 35);
+            this.label9.Location = new System.Drawing.Point(11, 38);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(107, 20);
             this.label9.TabIndex = 0;
@@ -546,11 +546,11 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(17, 97);
+            this.label13.Location = new System.Drawing.Point(7, 97);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(217, 20);
+            this.label13.Size = new System.Drawing.Size(134, 20);
             this.label13.TabIndex = 1;
-            this.label13.Text = "Number of Pixels with Color";
+            this.label13.Text = "Pixels with Color";
             // 
             // colorExistsLabel
             // 
