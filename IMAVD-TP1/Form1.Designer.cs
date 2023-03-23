@@ -100,7 +100,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(8, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 30);
+            this.label1.Size = new System.Drawing.Size(60, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Name:";
             // 
@@ -110,7 +110,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(6, 84);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(140, 30);
+            this.label2.Size = new System.Drawing.Size(93, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Extension:";
             // 
@@ -210,7 +210,7 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(9, 248);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(189, 30);
+            this.label6.Size = new System.Drawing.Size(126, 20);
             this.label6.TabIndex = 6;
             this.label6.Text = "Creation Date:";
             // 
@@ -220,7 +220,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(7, 205);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 30);
+            this.label5.Size = new System.Drawing.Size(82, 20);
             this.label5.TabIndex = 5;
             this.label5.Text = "Size(Kb):";
             // 
@@ -230,7 +230,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(6, 167);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 30);
+            this.label4.Size = new System.Drawing.Size(107, 20);
             this.label4.TabIndex = 4;
             this.label4.Text = "Dimensions:";
             // 
@@ -240,7 +240,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(7, 127);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(125, 30);
+            this.label3.Size = new System.Drawing.Size(83, 20);
             this.label3.TabIndex = 3;
             this.label3.Text = "Location:";
             // 
@@ -253,7 +253,6 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Search Color";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // imageBox
             // 
@@ -270,10 +269,10 @@
             // 
             this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Location = new System.Drawing.Point(0, 33);
+            this.menuStrip1.Location = new System.Drawing.Point(0, 81);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1548, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(2322, 54);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -286,7 +285,7 @@
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip2.Size = new System.Drawing.Size(1548, 33);
+            this.menuStrip2.Size = new System.Drawing.Size(2322, 54);
             this.menuStrip2.TabIndex = 8;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -336,7 +335,6 @@
             this.rEDToolStripMenuItem.Name = "rEDToolStripMenuItem";
             this.rEDToolStripMenuItem.Size = new System.Drawing.Size(197, 34);
             this.rEDToolStripMenuItem.Text = "Red";
-            this.rEDToolStripMenuItem.Click += new System.EventHandler(this.rEDToolStripMenuItem_Click);
             // 
             // greenToolStripMenuItem
             // 
@@ -363,6 +361,7 @@
             this.zoomBar.Name = "zoomBar";
             this.zoomBar.Size = new System.Drawing.Size(233, 69);
             this.zoomBar.TabIndex = 9;
+            this.zoomBar.Scroll += new System.EventHandler(this.zoomBar_Scroll);
             // 
             // ZoomLabel
             // 
@@ -530,6 +529,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "UI";
             this.Text = "Image Editor";
+            this.Load += new System.EventHandler(this.UI_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();

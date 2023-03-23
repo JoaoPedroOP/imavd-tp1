@@ -1,31 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IMAVD_TP1
 {
     public partial class UI : Form
     {
+        private Bitmap originalImage;
+
         public UI()
         {
             InitializeComponent();
         }
 
-        private void rEDToolStripMenuItem_Click(object sender, EventArgs e)
+        private void UI_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            this.DoubleBuffered = true;
         }
 
         private void imgLoadBtn_Click(object sender, EventArgs e)
@@ -34,7 +25,9 @@ namespace IMAVD_TP1
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
-                imageBox.Image = new Bitmap(openFile.FileName);
+                var fileImage = new Bitmap(openFile.FileName);
+                imageBox.Image = fileImage;
+                this.originalImage = fileImage;
                 SetImagePropertiesLabels(openFile);
             }
 
@@ -62,6 +55,24 @@ namespace IMAVD_TP1
 
             labelDate.Text = fileInfo.CreationTime.ToString();
             labelDate.Visible = true;
+        }
+
+        private Image ZoomPicture(Image img, Size size)
+        {
+            var bm = new Bitmap(img, img.Width + (img.Width * size.Width / 10),
+                img.Height + (img.Height * size.Height / 10));
+            var gpu = Graphics.FromImage(bm);
+            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            return bm;
+        }
+
+        private void zoomBar_Scroll(object sender, EventArgs e)
+        {
+            if (zoomBar.Value >= 0)
+            {
+                imageBox.SizeMode = PictureBoxSizeMode.CenterImage;
+                imageBox.Image = ZoomPicture(this.originalImage, new Size(zoomBar.Value, zoomBar.Value));
+            }
         }
     }
 }
