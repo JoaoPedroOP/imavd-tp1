@@ -21,6 +21,7 @@ namespace IMAVD_TP1
 
         private void imgLoadBtn_Click(object sender, EventArgs e)
         {
+            this.imageBox.Image = null;
             var openFile = new OpenFileDialog();
 
             if (openFile.ShowDialog() == DialogResult.OK)
@@ -73,6 +74,63 @@ namespace IMAVD_TP1
                 imageBox.SizeMode = PictureBoxSizeMode.CenterImage;
                 imageBox.Image = ZoomPicture(this.originalImage, new Size(zoomBar.Value, zoomBar.Value));
             }
+        }
+
+        private void rEDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red");
+            }
+            else warnToLoadImage();
+        }
+
+        private void greenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Green");
+            }
+            else warnToLoadImage();
+        }
+
+        private void blueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image,"Blue");
+            }
+            else warnToLoadImage();
+        }
+
+        public static void warnToLoadImage()
+        {
+            MessageBox.Show("Please load an image first!","Need Image First");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (this.imageBox.Image != null)
+            {
+                if (colorSearchDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Color selectedColor = colorSearchDialog.Color;
+                    if (selectedColor != null)
+                    {
+                        ImageSearcher.searchColor(this.imageBox.Image,selectedColor);
+                    }
+                }
+            }
+            else warnToLoadImage();
+        }
+
+        private void invertColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors");
+            }
+            else warnToLoadImage();
         }
     }
 }
