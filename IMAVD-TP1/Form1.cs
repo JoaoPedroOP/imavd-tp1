@@ -1,5 +1,6 @@
 ﻿using IMAVD_TP1.DTO;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -12,9 +13,14 @@ namespace IMAVD_TP1
         private ColorSearchDTO colorSearchInfo;
         private int brightness = 0;
 
+        //undo settings
+        private List<Image> transformedImageStatus = new List<Image>();
+        private bool canUndo=false;
+
         public UI()
         {
             InitializeComponent();
+            transformedImageStatus.Clear();
         }
 
         private void UI_Load(object sender, EventArgs e)
@@ -36,7 +42,8 @@ namespace IMAVD_TP1
                 LoadImageToBeEdited();
                 PrepareImageForResolutionEditing();
             }
-
+            this.canUndo= false;
+            this.checkUndoStatus();
         }
 
         private void LoadImageToBeEdited()
@@ -88,6 +95,7 @@ namespace IMAVD_TP1
 
         private void rEDToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red");
@@ -97,6 +105,7 @@ namespace IMAVD_TP1
 
         private void greenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Green");
@@ -106,6 +115,7 @@ namespace IMAVD_TP1
 
         private void blueToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image,"Blue");
@@ -118,7 +128,7 @@ namespace IMAVD_TP1
             MessageBox.Show("Please load an image first!","Need Image First");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void searchColorBtn_Click(object sender, EventArgs e)
         {
             if (this.imageBox.Image != null)
             {
@@ -144,6 +154,7 @@ namespace IMAVD_TP1
 
         private void invertColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors");
@@ -153,6 +164,8 @@ namespace IMAVD_TP1
 
         private void brightBar_Scroll(object sender, EventArgs e)
         {
+            saveLastImageStatus();
+
             this.brightLbl.Visible = true;
             this.brightLbl.Text = this.brightBar.Value.ToString()+"%";
 
@@ -190,12 +203,45 @@ namespace IMAVD_TP1
 
         private void imgHorResCounter_ValueChanged(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             this.transformedImageBox.Width = (int)this.imgHorResCounter.Value;
         }
 
         private void imgVertResCounter_ValueChanged(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             this.transformedImageBox.Height = (int)this.imgVertResCounter.Value;
         }
+
+        #region UNDO
+        private void checkUndoStatus()
+        {
+            if (canUndo)
+            {
+                this.undoToolStripMenuItem.Enabled = true;
+            }
+            else this.undoToolStripMenuItem.Enabled = false;
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.transformedImageBox.Image = this.transformedImageStatus[this.transformedImageStatus.Count-1];
+            this.transformedImageStatus.Remove(this.transformedImageStatus[this.transformedImageStatus.Count - 1]);
+
+            if (this.transformedImageStatus.Count == 0)
+            {
+                this.canUndo = false;
+                checkUndoStatus();
+            }
+        }
+
+        private void saveLastImageStatus()
+        {
+            this.canUndo = true;
+            this.transformedImageStatus.Add(this.transformedImageBox.Image);
+
+            checkUndoStatus();
+        }
+        #endregion
     }
 }

@@ -42,7 +42,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.searchColorBtn = new System.Windows.Forms.Button();
             this.colorSearchDialog = new System.Windows.Forms.ColorDialog();
             this.imageBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -57,6 +57,7 @@
             this.blueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.invertColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomBar = new System.Windows.Forms.TrackBar();
             this.ZoomLabel = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -254,15 +255,15 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Location:";
             // 
-            // button2
+            // searchColorBtn
             // 
-            this.button2.Location = new System.Drawing.Point(978, 584);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(152, 46);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Search Color";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.searchColorBtn.Location = new System.Drawing.Point(978, 584);
+            this.searchColorBtn.Name = "searchColorBtn";
+            this.searchColorBtn.Size = new System.Drawing.Size(152, 46);
+            this.searchColorBtn.TabIndex = 4;
+            this.searchColorBtn.Text = "Search Color";
+            this.searchColorBtn.UseVisualStyleBackColor = true;
+            this.searchColorBtn.Click += new System.EventHandler(this.searchColorBtn_Click);
             // 
             // imageBox
             // 
@@ -287,7 +288,8 @@
             // 
             this.menuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.opcaiToolStripMenuItem});
+            this.opcaiToolStripMenuItem,
+            this.undoToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(1376, 28);
@@ -310,7 +312,7 @@
             this.applyToolStripMenuItem,
             this.saveToolStripMenuItem});
             this.crioToolStripMenuItem.Name = "crioToolStripMenuItem";
-            this.crioToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.crioToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.crioToolStripMenuItem.Text = "Crop";
             // 
             // applyToolStripMenuItem
@@ -322,7 +324,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 26);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -370,6 +372,14 @@
             this.invertColorToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.invertColorToolStripMenuItem.Text = "Invert Color";
             this.invertColorToolStripMenuItem.Click += new System.EventHandler(this.invertColorToolStripMenuItem_Click);
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Enabled = false;
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // zoomBar
             // 
@@ -641,7 +651,7 @@
             this.Controls.Add(this.ZoomLabel);
             this.Controls.Add(this.zoomBar);
             this.Controls.Add(this.imageBox);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.searchColorBtn);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.menuStrip2);
@@ -682,7 +692,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button searchColorBtn;
         private System.Windows.Forms.ColorDialog colorSearchDialog;
         private System.Windows.Forms.PictureBox imageBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -727,6 +737,7 @@
         private System.Windows.Forms.Label brightLbl;
         private System.Windows.Forms.GroupBox saveGBox;
         private System.Windows.Forms.Button saveImgBtn;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
     }
 }
 
