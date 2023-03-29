@@ -356,7 +356,7 @@
             this.rEDToolStripMenuItem.Name = "rEDToolStripMenuItem";
             this.rEDToolStripMenuItem.Size = new System.Drawing.Size(197, 34);
             this.rEDToolStripMenuItem.Text = "Red";
-            this.rEDToolStripMenuItem.Click += new System.EventHandler(this.rEDToolStripMenuItem_Click);
+            this.rEDToolStripMenuItem.Click += new System.EventHandler(this.RedToolStripMenuItem_Click);
             // 
             // greenToolStripMenuItem
             // 

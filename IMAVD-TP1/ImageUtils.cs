@@ -8,7 +8,6 @@ namespace IMAVD_TP1
 {
     internal class ImageUtils
     {
-
         public static void RgbToHsl(int r, int g, int b, out double h, out double s, out double l)
         {
             double rd = (double)r / 255.0;

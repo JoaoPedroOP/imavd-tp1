@@ -86,7 +86,6 @@
     <Compile Include="Handlers\ContrastHandler.cs" />
     <Compile Include="Handlers\IImageHandler.cs" />
     <Compile Include="Helpers\Logger.cs" />
-    <Compile Include="ImageAdjuster.cs" />
     <Compile Include="ImageColorer.cs" />
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="ImageSearcher.cs" />

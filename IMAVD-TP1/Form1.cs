@@ -119,14 +119,22 @@ namespace IMAVD_TP1
 
         private void zoomBar_Scroll(object sender, EventArgs e)
         {
-            if (zoomBar.Value >= 0)
+            saveLastImageStatus();
+
+            if (this.imageBox.Image != null)
             {
-                imageBox.SizeMode = PictureBoxSizeMode.CenterImage;
-                imageBox.Image = ZoomPicture(this.originalImage, new Size(zoomBar.Value, zoomBar.Value));
+                if (zoomBar.Value >= 0)
+                {
+                    this.transformedImageBox.SizeMode = PictureBoxSizeMode.CenterImage;
+                    this.transformedImageBox.Image = ZoomPicture(
+                        this.originalImage,
+                        new Size(zoomBar.Value, zoomBar.Value));
+                }
             }
+            else Logger.WarnToLoadImage();
         }
 
-        private void rEDToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveLastImageStatus();
             if (this.imageBox.Image != null)
@@ -243,6 +251,8 @@ namespace IMAVD_TP1
 
         private void contrastBar_Scroll(object sender, EventArgs e)
         {
+            saveLastImageStatus();
+
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
@@ -253,9 +263,10 @@ namespace IMAVD_TP1
             else Logger.WarnToLoadImage();
         }
 
-
         private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveLastImageStatus();
+
             if (this.imageBox.Image != null)
             {
                 var rotationForm = new RotationForm(
@@ -267,13 +278,7 @@ namespace IMAVD_TP1
                 rotationForm.ShowDialog();
             }
             else Logger.WarnToLoadImage();
-        }
-
-        private void rotationBar_Scroll(object sender, EventArgs e)
-        {
-        }
-
-        
+        }        
 
         #region UNDO
         private void checkUndoStatus()
