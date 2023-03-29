@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace IMAVD_TP1.Enums
 {
-    internal enum Operation
+    public enum Operation
     {
         Contrast = 0,
         Brightness = 1,
-
+        Rotate = 2,
     }
 }

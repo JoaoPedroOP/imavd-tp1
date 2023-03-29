@@ -1,15 +1,13 @@
-﻿using ImageProcessor.Imaging.Formats;
-using ImageProcessor;
-using ImageProcessor.Processors;
+﻿using ImageProcessor;
 using IMAVD_TP1.DTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using IMAVD_TP1.Handlers;
 using IMAVD_TP1.Enums;
+using IMAVD_TP1.Helpers;
 
 namespace IMAVD_TP1
 {
@@ -18,11 +16,7 @@ namespace IMAVD_TP1
         private Bitmap originalImage;
         private ColorSearchDTO colorSearchInfo;
         private string fileName;
-        private List<IImageHandler> imageHandlers = new List<IImageHandler>
-            {
-                new ContrastHandler(),
-                new BrightnessHandler(),
-            };
+        private ImageProcessor imageProcessor = new ImageProcessor();
 
         //undo settings
         private List<Image> transformedImageStatus = new List<Image>();
@@ -139,7 +133,7 @@ namespace IMAVD_TP1
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red");
             }
-            else warnToLoadImage();
+            else Logger.WarnToLoadImage();
         }
 
         private void greenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -149,7 +143,7 @@ namespace IMAVD_TP1
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Green");
             }
-            else warnToLoadImage();
+            else Logger.WarnToLoadImage();
         }
 
         private void blueToolStripMenuItem_Click(object sender, EventArgs e)
@@ -159,12 +153,7 @@ namespace IMAVD_TP1
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image,"Blue");
             }
-            else warnToLoadImage();
-        }
-
-        public static void warnToLoadImage()
-        {
-            MessageBox.Show("Please load an image first!","Need Image First");
+            else Logger.WarnToLoadImage();
         }
 
         private void searchColorBtn_Click(object sender, EventArgs e)
@@ -188,7 +177,7 @@ namespace IMAVD_TP1
                     }
                 }
             }
-            else warnToLoadImage();
+            else Logger.WarnToLoadImage();
         }
 
         private void invertColorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -198,20 +187,22 @@ namespace IMAVD_TP1
             {
                 this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors");
             }
-            else warnToLoadImage();
+            else Logger.WarnToLoadImage();
         }
 
         private void brightBar_Scroll(object sender, EventArgs e)
         {
             saveLastImageStatus();
 
-
             if (this.imageBox.Image != null)
             {
-                this.ImageProcessing(Operation.Brightness, this.brightBar.Value);
+                this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
+                    this.fileName,
+                    Operation.Brightness,
+                    this.brightBar.Value);
 
             }
-            else warnToLoadImage();
+            else Logger.WarnToLoadImage();
         }
 
         private void saveImgBtn_Click(object sender, EventArgs e)
@@ -254,36 +245,35 @@ namespace IMAVD_TP1
         {
             if (this.imageBox.Image != null)
             {
-                this.ImageProcessing(Operation.Contrast, this.contrastBar.Value);
+                this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
+                    this.fileName,
+                    Operation.Contrast,
+                    this.contrastBar.Value);
             }
-            else warnToLoadImage();
+            else Logger.WarnToLoadImage();
         }
 
-        private void ImageProcessing(Operation operation, params object[] args)
+
+        private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            byte[] photoBytes = File.ReadAllBytes(this.fileName);
-
-            using (MemoryStream inStream = new MemoryStream(photoBytes))
+            if (this.imageBox.Image != null)
             {
-                using (MemoryStream outStream = new MemoryStream())
-                {
-                    // Initialize the ImageFactory using the overload to preserve EXIF metadata.
-                    using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
-                    {
-                        // Load, resize, set the format and quality and save an image.
-                        foreach (var handler in imageHandlers)
-                        {
-                            if (handler.CanHandle(operation, args))
-                            {
-                                handler.Transform(inStream, outStream, imageFactory);
-                            }
-                        }
-                    }
-                    // Do something with the stream.
-                    this.transformedImageBox.Image = Image.FromStream(outStream);
-                }
+                var rotationForm = new RotationForm(
+                    this.imageProcessor,
+                    this.imageBox.Image,
+                    this.fileName,
+                    this.transformedImageBox);
+
+                rotationForm.ShowDialog();
             }
+            else Logger.WarnToLoadImage();
         }
+
+        private void rotationBar_Scroll(object sender, EventArgs e)
+        {
+        }
+
+        
 
         #region UNDO
         private void checkUndoStatus()
