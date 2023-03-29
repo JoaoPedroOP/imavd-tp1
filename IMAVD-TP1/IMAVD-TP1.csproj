@@ -59,8 +59,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageAdjuster.cs" />
     <Compile Include="ImageColorer.cs" />
     <Compile Include="ImageSearcher.cs" />
+    <Compile Include="ImageUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

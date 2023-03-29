@@ -10,6 +10,7 @@ namespace IMAVD_TP1
     {
         private Bitmap originalImage;
         private ColorSearchDTO colorSearchInfo;
+        private int brightness = 0;
 
         public UI()
         {
@@ -142,5 +143,20 @@ namespace IMAVD_TP1
             }
             else warnToLoadImage();
         }
+
+        private void brightBar_Scroll(object sender, EventArgs e)
+        {
+            this.brightLbl.Visible = true;
+            this.brightLbl.Text = this.brightBar.Value.ToString()+"%";
+
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageAdjuster.transform(this.imageBox.Image,
+                    "Bright",this.brightBar.Value);
+            }
+            else warnToLoadImage();
+        }
+
+
     }
 }
