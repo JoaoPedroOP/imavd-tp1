@@ -157,6 +157,17 @@ namespace IMAVD_TP1
             else warnToLoadImage();
         }
 
+        private void saveImgBtn_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PNG Image|*.png";
+            saveFileDialog.RestoreDirectory = true;
 
+            if(saveFileDialog.ShowDialog()==DialogResult.OK)
+            {
+                this.transformedImageBox.Image.Save(saveFileDialog.FileName,
+                    System.Drawing.Imaging.ImageFormat.Png);
+            }
+        }
     }
 }

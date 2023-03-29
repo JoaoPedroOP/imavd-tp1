@@ -79,6 +79,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.brightLbl = new System.Windows.Forms.Label();
+            this.saveGBox = new System.Windows.Forms.GroupBox();
+            this.saveImgBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip2.SuspendLayout();
@@ -91,6 +93,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgVertResCounter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transformedImageBox)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.saveGBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // imgLoadBtn
@@ -586,11 +589,32 @@
             this.brightLbl.TabIndex = 21;
             this.brightLbl.Text = "0%";
             // 
+            // saveGBox
+            // 
+            this.saveGBox.Controls.Add(this.saveImgBtn);
+            this.saveGBox.Location = new System.Drawing.Point(1152, 300);
+            this.saveGBox.Name = "saveGBox";
+            this.saveGBox.Size = new System.Drawing.Size(193, 87);
+            this.saveGBox.TabIndex = 23;
+            this.saveGBox.TabStop = false;
+            this.saveGBox.Text = "Save Image";
+            // 
+            // saveImgBtn
+            // 
+            this.saveImgBtn.Location = new System.Drawing.Point(28, 21);
+            this.saveImgBtn.Name = "saveImgBtn";
+            this.saveImgBtn.Size = new System.Drawing.Size(144, 45);
+            this.saveImgBtn.TabIndex = 17;
+            this.saveImgBtn.Text = "Save Image";
+            this.saveImgBtn.UseVisualStyleBackColor = true;
+            this.saveImgBtn.Click += new System.EventHandler(this.saveImgBtn_Click);
+            // 
             // UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1376, 844);
+            this.Controls.Add(this.saveGBox);
             this.Controls.Add(this.brightLbl);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.transformedImageBox);
@@ -629,6 +653,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.transformedImageBox)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.saveGBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -687,6 +712,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label brightLbl;
+        private System.Windows.Forms.GroupBox saveGBox;
+        private System.Windows.Forms.Button saveImgBtn;
     }
 }
 
