@@ -1,9 +1,15 @@
-﻿using IMAVD_TP1.DTO;
+﻿using ImageProcessor.Imaging.Formats;
+using ImageProcessor;
+using ImageProcessor.Processors;
+using IMAVD_TP1.DTO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using IMAVD_TP1.Handlers;
+using IMAVD_TP1.Enums;
 
 namespace IMAVD_TP1
 {
@@ -11,7 +17,12 @@ namespace IMAVD_TP1
     {
         private Bitmap originalImage;
         private ColorSearchDTO colorSearchInfo;
-        private int brightness = 0;
+        private string fileName;
+        private List<IImageHandler> imageHandlers = new List<IImageHandler>
+            {
+                new ContrastHandler(),
+                new BrightnessHandler(),
+            };
 
         //undo settings
         private List<Image> transformedImageStatus = new List<Image>();
@@ -41,6 +52,7 @@ namespace IMAVD_TP1
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
+                this.fileName = openFile.FileName;
                 var fileImage = new Bitmap(openFile.FileName);
 
                 if (chromaKeyOpt.Checked)
@@ -193,13 +205,11 @@ namespace IMAVD_TP1
         {
             saveLastImageStatus();
 
-            this.brightLbl.Visible = true;
-            this.brightLbl.Text = this.brightBar.Value.ToString()+"%";
 
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageAdjuster.transform(this.transformedImageBox.Image,
-                    "Bright",this.brightBar.Value);
+                this.ImageProcessing(Operation.Brightness, this.brightBar.Value);
+
             }
             else warnToLoadImage();
         }
@@ -238,6 +248,41 @@ namespace IMAVD_TP1
         {
             saveLastImageStatus();
             this.transformedImageBox.Height = (int)this.imgVertResCounter.Value;
+        }
+
+        private void contrastBar_Scroll(object sender, EventArgs e)
+        {
+            if (this.imageBox.Image != null)
+            {
+                this.ImageProcessing(Operation.Contrast, this.contrastBar.Value);
+            }
+            else warnToLoadImage();
+        }
+
+        private void ImageProcessing(Operation operation, params object[] args)
+        {
+            byte[] photoBytes = File.ReadAllBytes(this.fileName);
+
+            using (MemoryStream inStream = new MemoryStream(photoBytes))
+            {
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    // Initialize the ImageFactory using the overload to preserve EXIF metadata.
+                    using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
+                    {
+                        // Load, resize, set the format and quality and save an image.
+                        foreach (var handler in imageHandlers)
+                        {
+                            if (handler.CanHandle(operation, args))
+                            {
+                                handler.Transform(inStream, outStream, imageFactory);
+                            }
+                        }
+                    }
+                    // Do something with the stream.
+                    this.transformedImageBox.Image = Image.FromStream(outStream);
+                }
+            }
         }
 
         #region UNDO

@@ -53,12 +53,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\ColorSearchDTO.cs" />
+    <Compile Include="Enums\Operation.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\BrightnessHandler.cs" />
+    <Compile Include="Handlers\ContrastHandler.cs" />
+    <Compile Include="Handlers\IImageHandler.cs" />
     <Compile Include="ImageAdjuster.cs" />
     <Compile Include="ImageColorer.cs" />
     <Compile Include="ImageSearcher.cs" />
