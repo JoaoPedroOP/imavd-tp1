@@ -30,12 +30,24 @@ namespace IMAVD_TP1
 
         private void imgLoadBtn_Click(object sender, EventArgs e)
         {
+            Color fundColorToRemove = new Color();
+            if (chromaKeyOpt.Checked)
+            {
+                 fundColorToRemove = chooseColorToRemove();
+            }
+
             this.imageBox.Image = null;
             var openFile = new OpenFileDialog();
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 var fileImage = new Bitmap(openFile.FileName);
+
+                if (chromaKeyOpt.Checked)
+                {
+                    fileImage = ImageColorer.getImageWithNoColor(fileImage,fundColorToRemove);
+                }
+
                 imageBox.Image = fileImage;
                 this.originalImage = fileImage;
                 SetImagePropertiesLabels(openFile);
@@ -44,6 +56,21 @@ namespace IMAVD_TP1
             }
             this.canUndo= false;
             this.checkUndoStatus();
+        }
+
+        private Color chooseColorToRemove()
+        {
+            if (colorSearchDialog.ShowDialog() == DialogResult.OK)
+            {
+                Color selectedColor = colorSearchDialog.Color;
+                if (selectedColor != null)
+                {
+                    return selectedColor;
+                }
+            }
+
+            MessageBox.Show("Please select a color!","Invalid!");
+            return new Color();
         }
 
         private void LoadImageToBeEdited()

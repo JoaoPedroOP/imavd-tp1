@@ -65,7 +65,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chromaKeyOpt = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -447,19 +447,19 @@
             this.button3.Text = "Resize";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chromaKeyOpt
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(35, 72);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(99, 20);
-            this.checkBox1.TabIndex = 16;
-            this.checkBox1.Text = "chroma key";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chromaKeyOpt.AutoSize = true;
+            this.chromaKeyOpt.Location = new System.Drawing.Point(35, 72);
+            this.chromaKeyOpt.Name = "chromaKeyOpt";
+            this.chromaKeyOpt.Size = new System.Drawing.Size(99, 20);
+            this.chromaKeyOpt.TabIndex = 16;
+            this.chromaKeyOpt.Text = "chroma key";
+            this.chromaKeyOpt.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.checkBox1);
+            this.groupBox2.Controls.Add(this.chromaKeyOpt);
             this.groupBox2.Controls.Add(this.imgLoadBtn);
             this.groupBox2.Location = new System.Drawing.Point(964, 295);
             this.groupBox2.Name = "groupBox2";
@@ -713,7 +713,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chromaKeyOpt;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label11;
