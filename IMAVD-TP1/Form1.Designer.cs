@@ -310,7 +310,7 @@
             this.applyToolStripMenuItem,
             this.saveToolStripMenuItem});
             this.crioToolStripMenuItem.Name = "crioToolStripMenuItem";
-            this.crioToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.crioToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.crioToolStripMenuItem.Text = "Crop";
             // 
             // applyToolStripMenuItem
@@ -322,8 +322,9 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(131, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // filterToolStripMenuItem
             // 
@@ -505,16 +506,28 @@
             // imgHorResCounter
             // 
             this.imgHorResCounter.Location = new System.Drawing.Point(197, 69);
+            this.imgHorResCounter.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.imgHorResCounter.Name = "imgHorResCounter";
             this.imgHorResCounter.Size = new System.Drawing.Size(129, 34);
             this.imgHorResCounter.TabIndex = 17;
+            this.imgHorResCounter.ValueChanged += new System.EventHandler(this.imgHorResCounter_ValueChanged);
             // 
             // imgVertResCounter
             // 
             this.imgVertResCounter.Location = new System.Drawing.Point(197, 109);
+            this.imgVertResCounter.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
             this.imgVertResCounter.Name = "imgVertResCounter";
             this.imgVertResCounter.Size = new System.Drawing.Size(129, 34);
             this.imgVertResCounter.TabIndex = 18;
+            this.imgVertResCounter.ValueChanged += new System.EventHandler(this.imgVertResCounter_ValueChanged);
             // 
             // transformedImageBox
             // 

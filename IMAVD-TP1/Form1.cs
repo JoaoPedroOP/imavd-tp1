@@ -33,8 +33,15 @@ namespace IMAVD_TP1
                 imageBox.Image = fileImage;
                 this.originalImage = fileImage;
                 SetImagePropertiesLabels(openFile);
+                LoadImageToBeEdited();
+                PrepareImageForResolutionEditing();
             }
 
+        }
+
+        private void LoadImageToBeEdited()
+        {
+            this.transformedImageBox.Image = imageBox.Image;
         }
 
         private void SetImagePropertiesLabels(OpenFileDialog openFile)
@@ -168,6 +175,27 @@ namespace IMAVD_TP1
                 this.transformedImageBox.Image.Save(saveFileDialog.FileName,
                     System.Drawing.Imaging.ImageFormat.Png);
             }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveImgBtn.PerformClick();
+        }
+
+        private void PrepareImageForResolutionEditing()
+        {
+            this.imgHorResCounter.Value = this.transformedImageBox.Width;
+            this.imgVertResCounter.Value = this.transformedImageBox.Height;
+        }
+
+        private void imgHorResCounter_ValueChanged(object sender, EventArgs e)
+        {
+            this.transformedImageBox.Width = (int)this.imgHorResCounter.Value;
+        }
+
+        private void imgVertResCounter_ValueChanged(object sender, EventArgs e)
+        {
+            this.transformedImageBox.Height = (int)this.imgVertResCounter.Value;
         }
     }
 }
