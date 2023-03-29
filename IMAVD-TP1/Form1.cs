@@ -158,7 +158,7 @@ namespace IMAVD_TP1
 
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageAdjuster.transform(this.imageBox.Image,
+                this.transformedImageBox.Image = ImageAdjuster.transform(this.transformedImageBox.Image,
                     "Bright",this.brightBar.Value);
             }
             else warnToLoadImage();
