@@ -88,6 +88,8 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip2.SuspendLayout();
@@ -105,6 +107,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.transformedImageBox)).BeginInit();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // imgLoadBtn
@@ -536,7 +539,7 @@
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox5.Size = new System.Drawing.Size(948, 276);
+            this.groupBox5.Size = new System.Drawing.Size(948, 325);
             this.groupBox5.TabIndex = 18;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Image Control";
@@ -549,11 +552,11 @@
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.searchColorBtn);
-            this.groupBox3.Location = new System.Drawing.Point(324, 20);
+            this.groupBox3.Location = new System.Drawing.Point(324, 31);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox3.Size = new System.Drawing.Size(289, 247);
+            this.groupBox3.Size = new System.Drawing.Size(289, 288);
             this.groupBox3.TabIndex = 20;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Color Search";
@@ -610,9 +613,9 @@
             this.groupBox4.Controls.Add(this.label11);
             this.groupBox4.Controls.Add(this.imgHorResCounter);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(5, 19);
+            this.groupBox4.Location = new System.Drawing.Point(5, 31);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(289, 248);
+            this.groupBox4.Size = new System.Drawing.Size(289, 288);
             this.groupBox4.TabIndex = 21;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Resolution";
@@ -669,6 +672,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.numericUpDown1);
+            this.groupBox6.Controls.Add(this.label14);
             this.groupBox6.Controls.Add(this.rotationBar);
             this.groupBox6.Controls.Add(this.label10);
             this.groupBox6.Controls.Add(this.ZoomLabel);
@@ -677,9 +682,9 @@
             this.groupBox6.Controls.Add(this.label8);
             this.groupBox6.Controls.Add(this.brightBar);
             this.groupBox6.Controls.Add(this.contrastBar);
-            this.groupBox6.Location = new System.Drawing.Point(654, 19);
+            this.groupBox6.Location = new System.Drawing.Point(637, 31);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(289, 248);
+            this.groupBox6.Size = new System.Drawing.Size(289, 288);
             this.groupBox6.TabIndex = 22;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Actions";
@@ -720,7 +725,7 @@
             // 
             this.groupBox7.Controls.Add(this.imageBox);
             this.groupBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox7.Location = new System.Drawing.Point(12, 344);
+            this.groupBox7.Location = new System.Drawing.Point(12, 393);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(927, 636);
             this.groupBox7.TabIndex = 20;
@@ -731,7 +736,7 @@
             // 
             this.groupBox8.Controls.Add(this.transformedImageBox);
             this.groupBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox8.Location = new System.Drawing.Point(945, 344);
+            this.groupBox8.Location = new System.Drawing.Point(945, 393);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(946, 636);
             this.groupBox8.TabIndex = 21;
@@ -743,10 +748,51 @@
             this.groupBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox9.Location = new System.Drawing.Point(13, 164);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(927, 144);
+            this.groupBox9.Size = new System.Drawing.Size(927, 193);
             this.groupBox9.TabIndex = 22;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Tools";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.249999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(29, 237);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(110, 30);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "Gamma";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.DecimalPlaces = 1;
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDown1.Location = new System.Drawing.Point(112, 237);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            65536});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(113, 26);
+            this.numericUpDown1.TabIndex = 21;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            65536});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // UI
             // 
@@ -790,6 +836,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.transformedImageBox)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -856,6 +903,8 @@
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TrackBar rotationBar;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label14;
     }
 }
 

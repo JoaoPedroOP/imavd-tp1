@@ -1,7 +1,6 @@
 ﻿using ImageProcessor;
 using IMAVD_TP1.Enums;
 using IMAVD_TP1.Handlers;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -15,6 +14,7 @@ namespace IMAVD_TP1
                 new ContrastHandler(),
                 new BrightnessHandler(),
                 new RotationHandler(),
+                new GammaHandler(),
             };
 
         public Image ImageProcessing(string fileName, Operation operation, params object[] args)
@@ -29,7 +29,7 @@ namespace IMAVD_TP1
                     using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
                     {
                         // Load, resize, set the format and quality and save an image.
-                        foreach (var handler in imageHandlers)
+                        foreach (IImageHandler handler in imageHandlers)
                         {
                             if (handler.CanHandle(operation, args))
                             {
@@ -38,7 +38,7 @@ namespace IMAVD_TP1
                         }
                     }
                     // Do something with the stream.
-                    var transformedImage = Image.FromStream(outStream);
+                    Image transformedImage = Image.FromStream(outStream);
 
                     return transformedImage;
                 }

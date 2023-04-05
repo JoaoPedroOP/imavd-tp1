@@ -1,13 +1,11 @@
-﻿using ImageProcessor;
-using IMAVD_TP1.DTO;
+﻿using IMAVD_TP1.DTO;
+using IMAVD_TP1.Enums;
+using IMAVD_TP1.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using IMAVD_TP1.Handlers;
-using IMAVD_TP1.Enums;
-using IMAVD_TP1.Helpers;
 
 namespace IMAVD_TP1
 {
@@ -20,7 +18,7 @@ namespace IMAVD_TP1
 
         //undo settings
         private List<Image> transformedImageStatus = new List<Image>();
-        private bool canUndo=false;
+        private bool canUndo = false;
 
         public UI()
         {
@@ -38,7 +36,7 @@ namespace IMAVD_TP1
             Color fundColorToRemove = new Color();
             if (chromaKeyOpt.Checked)
             {
-                 fundColorToRemove = chooseColorToRemove();
+                fundColorToRemove = chooseColorToRemove();
             }
 
             this.imageBox.Image = null;
@@ -51,7 +49,7 @@ namespace IMAVD_TP1
 
                 if (chromaKeyOpt.Checked)
                 {
-                    fileImage = ImageColorer.getImageWithNoColor(fileImage,fundColorToRemove);
+                    fileImage = ImageColorer.getImageWithNoColor(fileImage, fundColorToRemove);
                 }
 
                 imageBox.Image = fileImage;
@@ -60,7 +58,7 @@ namespace IMAVD_TP1
                 LoadImageToBeEdited();
                 PrepareImageForResolutionEditing();
             }
-            this.canUndo= false;
+            this.canUndo = false;
             this.checkUndoStatus();
         }
 
@@ -75,7 +73,7 @@ namespace IMAVD_TP1
                 }
             }
 
-            MessageBox.Show("Please select a color!","Invalid!");
+            MessageBox.Show("Please select a color!", "Invalid!");
             return new Color();
         }
 
@@ -159,7 +157,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image,"Blue");
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Blue");
             }
             else Logger.WarnToLoadImage();
         }
@@ -173,13 +171,15 @@ namespace IMAVD_TP1
                     Color selectedColor = colorSearchDialog.Color;
                     if (selectedColor != null)
                     {
-                        colorSearchInfo = ImageSearcher.searchColor(this.imageBox.Image,selectedColor);
+                        colorSearchInfo = ImageSearcher.searchColor(this.imageBox.Image, selectedColor);
 
                         colorExistsLabel.Visible = true;
-                        if (colorSearchInfo.colorExists) {
+                        if (colorSearchInfo.colorExists)
+                        {
                             colorExistsLabel.Text = "Color Found!";
-                        }else colorExistsLabel.Text = "Color NOT Found!";
-                        
+                        }
+                        else colorExistsLabel.Text = "Color NOT Found!";
+
                         nrPixelsWithColorLabel.Visible = true;
                         nrPixelsWithColorLabel.Text = colorSearchInfo.numberOfSameColorPixels.ToString();
                     }
@@ -225,13 +225,26 @@ namespace IMAVD_TP1
             else Logger.WarnToLoadImage();
         }
 
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.originalImage != null)
+            {
+                this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
+                    this.fileName,
+                    Operation.Gamma,
+                    this.numericUpDown1.Value);
+            }
+            else Logger.WarnToLoadImage();
+
+        }
+
         private void saveImgBtn_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "PNG Image|*.png";
             saveFileDialog.RestoreDirectory = true;
 
-            if(saveFileDialog.ShowDialog()==DialogResult.OK)
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.transformedImageBox.Image.Save(saveFileDialog.FileName,
                     System.Drawing.Imaging.ImageFormat.Png);
@@ -287,7 +300,7 @@ namespace IMAVD_TP1
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.transformedImageBox.Image = this.transformedImageStatus[this.transformedImageStatus.Count-1];
+            this.transformedImageBox.Image = this.transformedImageStatus[this.transformedImageStatus.Count - 1];
             this.transformedImageStatus.Remove(this.transformedImageStatus[this.transformedImageStatus.Count - 1]);
 
             if (this.transformedImageStatus.Count == 0)

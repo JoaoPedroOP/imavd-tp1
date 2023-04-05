@@ -1,11 +1,6 @@
 ﻿using ImageProcessor;
 using IMAVD_TP1.Enums;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IMAVD_TP1.Handlers
 {
@@ -15,7 +10,7 @@ namespace IMAVD_TP1.Handlers
 
         public bool CanHandle(Operation operation, params object[] args)
         {
-            if(operation == Operation.Rotate && int.TryParse(args[0].ToString(), out var value))
+            if (operation == Operation.Rotate && int.TryParse(args[0].ToString(), out int value))
             {
                 this.Value = value;
 

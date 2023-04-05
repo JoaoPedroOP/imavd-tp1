@@ -4,13 +4,13 @@ using System.IO;
 
 namespace IMAVD_TP1.Handlers
 {
-    internal class BrightnessHandler : IImageHandler
+    internal class GammaHandler : IImageHandler
     {
-        private int Value;
+        private float Value;
 
         public bool CanHandle(Operation operation, params object[] args)
         {
-            if (operation == Operation.Brightness && int.TryParse(args[0].ToString(), out int value))
+            if (operation == Operation.Gamma && float.TryParse(args[0].ToString(), out float value))
             {
                 this.Value = value;
 
@@ -22,7 +22,7 @@ namespace IMAVD_TP1.Handlers
         public void Transform(MemoryStream inStream, MemoryStream outStream, ImageFactory imageFactory)
         {
             imageFactory.Load(inStream)
-                        .Brightness(this.Value)
+                        .Gamma(this.Value)
                         .Save(outStream);
         }
     }
