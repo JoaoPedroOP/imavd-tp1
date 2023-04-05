@@ -213,6 +213,18 @@ namespace IMAVD_TP1
             else Logger.WarnToLoadImage();
         }
 
+        private void rotationBar_Scroll(object sender, EventArgs e)
+        {
+            if (this.originalImage != null)
+            {
+                this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
+                    this.fileName,
+                    Operation.Rotate,
+                    this.rotationBar.Value);
+            }
+            else Logger.WarnToLoadImage();
+        }
+
         private void saveImgBtn_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -262,23 +274,6 @@ namespace IMAVD_TP1
             }
             else Logger.WarnToLoadImage();
         }
-
-        private void rotateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveLastImageStatus();
-
-            if (this.imageBox.Image != null)
-            {
-                var rotationForm = new RotationForm(
-                    this.imageProcessor,
-                    this.imageBox.Image,
-                    this.fileName,
-                    this.transformedImageBox);
-
-                rotationForm.ShowDialog();
-            }
-            else Logger.WarnToLoadImage();
-        }        
 
         #region UNDO
         private void checkUndoStatus()
