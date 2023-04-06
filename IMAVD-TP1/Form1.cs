@@ -319,5 +319,51 @@ namespace IMAVD_TP1
         }
         #endregion
 
+        #region Crop Image
+        private void fourAreasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageCroper.crop(
+                    this.imageBox.Image, "Four Areas");
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void twoAreasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageCroper.crop(
+                    this.imageBox.Image, "Two Areas");
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void topLeftCorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageCroper.crop(
+                    this.imageBox.Image, "Top Left Corner");
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void lowRightCornerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = ImageCroper.crop(
+                    this.imageBox.Image, "Low Right Corner");
+            }
+            else Logger.WarnToLoadImage();
+
+        }
+        #endregion
     }
 }

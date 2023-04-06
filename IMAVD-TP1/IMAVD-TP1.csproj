@@ -88,6 +88,7 @@
     <Compile Include="Handlers\IImageHandler.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="ImageColorer.cs" />
+    <Compile Include="ImageCroper.cs" />
     <Compile Include="ImageProcessor.cs" />
     <Compile Include="ImageSearcher.cs" />
     <Compile Include="ImageUtils.cs" />
