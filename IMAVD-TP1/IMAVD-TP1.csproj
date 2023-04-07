@@ -81,6 +81,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\FlipHandler.cs" />
     <Compile Include="Handlers\GammaHandler.cs" />
     <Compile Include="Handlers\RotationHandler.cs" />
     <Compile Include="Handlers\BrightnessHandler.cs" />

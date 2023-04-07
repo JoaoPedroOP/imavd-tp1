@@ -8,5 +8,10 @@ namespace IMAVD_TP1.Helpers
         {
             MessageBox.Show("Please load an image first!", "Need Image First");
         }
+
+        public static void WarnToSelectArea()
+        {
+            MessageBox.Show("Please select area first!", "Crop Area");
+        }
     }
 }

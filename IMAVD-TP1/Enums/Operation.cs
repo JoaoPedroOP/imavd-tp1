@@ -12,5 +12,6 @@ namespace IMAVD_TP1.Enums
         Brightness = 1,
         Rotate = 2,
         Gamma = 3,
+        Flip = 4,
     }
 }

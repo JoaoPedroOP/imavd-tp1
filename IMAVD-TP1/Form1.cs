@@ -319,7 +319,7 @@ namespace IMAVD_TP1
         }
         #endregion
 
-        #region Crop Image
+        #region Split Image
         private void fourAreasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveLastImageStatus();
@@ -364,6 +364,218 @@ namespace IMAVD_TP1
             else Logger.WarnToLoadImage();
 
         }
+        #endregion
+
+
+        #region Flip Image
+        private void flipHorizontalBtn_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
+                    this.fileName,
+                    Operation.Flip,
+                    false);
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void flipVerticallyBtn_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
+                    this.fileName,
+                    Operation.Flip,
+                    true);
+            }
+            else Logger.WarnToLoadImage();
+        }
+        #endregion
+
+        #region Crop Image
+
+
+        int crpX, crpY, rectW, rectH;
+        bool isSelectMode = false;
+        public Pen crpPen = new Pen(Color.White);
+
+        private void cropBtn_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+
+            if (this.imageBox.Image != null)
+            {
+                if (rectW != 0 && rectH != 0)
+                {
+                    Bitmap original = new Bitmap(imageBox.Width, imageBox.Height);
+                    imageBox.DrawToBitmap(original, imageBox.ClientRectangle);
+
+                    Bitmap cropped = new Bitmap(rectW, rectH);
+                    for (int i = 0; i < rectW; i++)
+                    {
+                        for (int y = 0; y < rectH; y++)
+                        {
+                            Color pxlclr = original.GetPixel(crpX + i, crpY + y);
+                            cropped.SetPixel(i, y, pxlclr);
+                        }
+                    }
+                    transformedImageBox.Image = (System.Drawing.Image)cropped;
+                    transformedImageBox.SizeMode = PictureBoxSizeMode.CenterImage;
+
+                    //Reset Graphics
+                    imageBox.Refresh();
+                    selectAreaBtn.BackColor = SystemColors.Control;
+                    isSelectMode = false;
+                    crpX = 0;
+                    crpY = 0;
+                    rectW = 0;
+                    rectH = 0;
+                }
+                else
+                {
+                    Logger.WarnToSelectArea();
+                }
+
+            }
+            else Logger.WarnToLoadImage();
+
+        }
+
+        private void SelectAreaInImage()
+        {
+            if (this.imageBox.Image != null)
+            {
+                if (!isSelectMode)
+                {
+                    imageBox.MouseDown += new MouseEventHandler(imageBox_MouseDown);
+                    imageBox.MouseMove += new MouseEventHandler(imageBox_MouseMove);
+                    imageBox.MouseEnter += new EventHandler(imageBox_MouseEnter);
+                    isSelectMode = true;
+                    selectAreaBtn.BackColor = Color.LightGreen;
+
+                    
+                }
+                else
+                {
+                    imageBox.Refresh();
+                    selectAreaBtn.BackColor = SystemColors.Control;
+                    isSelectMode = false;
+                    crpX = 0;
+                    crpY = 0;
+                    rectW = 0;
+                    rectH = 0;
+                }
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void imageBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                if (isSelectMode)
+                {
+                    Cursor = Cursors.Cross;
+                    crpPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+
+                    crpX = e.X;
+                    crpY = e.Y;
+                }
+            }
+        }
+
+        private void imageBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                if (isSelectMode)
+                {
+                    imageBox.Refresh();
+                    rectW = e.X - crpX;
+                    rectH = e.Y - crpY;
+                    Graphics g = imageBox.CreateGraphics();
+                    g.DrawRectangle(crpPen, crpX, crpY, rectW, rectH);
+                    g.Dispose();
+                }
+            }
+        }
+
+        private void imageBox_MouseEnter(object sender, EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            if (isSelectMode)
+            {
+                Cursor = Cursors.Cross;
+            }
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            Cursor = Cursors.Default;
+        }
+        #endregion
+
+        #region Add text or image 
+        private void selectAreaBtn_Click(object sender, EventArgs e)
+        {
+            SelectAreaInImage();
+        }
+
+        private void addTextOverImageBtn_Click(object sender, EventArgs e)
+        {
+            //TODO
+        }
+
+        private void addImageOverImageBtn_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+
+            if (rectW != 0 && rectH != 0)
+            {
+                var openFile = new OpenFileDialog();
+
+                if (openFile.ShowDialog() == DialogResult.OK)
+                {
+                    var fileImage = new Bitmap(openFile.FileName);
+
+                    Bitmap transform = new Bitmap(transformedImageBox.Image);
+
+                    Bitmap mergedImage = new Bitmap(transformedImageBox.Image);
+
+                    using (Graphics g = Graphics.FromImage(mergedImage))
+                    {
+                        g.DrawImage(transform, new Point(0, 0));
+
+                        g.DrawImage(fileImage, new Rectangle(groupBox8.Location.X + transformedImageBox.Location.X + crpX, groupBox8.Location.Y + transformedImageBox.Location.Y + crpY, rectW*2, rectH*2));
+                    }
+                    transformedImageBox.Image = mergedImage;
+                    //Reset Graphics
+                    imageBox.Refresh();
+                    selectAreaBtn.BackColor = SystemColors.Control;
+                    isSelectMode = false;
+                    crpX = 0;
+                    crpY = 0;
+                    rectW = 0;
+                    rectH = 0;
+
+                }
+            }
+            else
+            {
+                Logger.WarnToSelectArea();
+            }
+        }
+
+
         #endregion
     }
 }

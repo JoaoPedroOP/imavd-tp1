@@ -15,6 +15,7 @@ namespace IMAVD_TP1
                 new BrightnessHandler(),
                 new RotationHandler(),
                 new GammaHandler(),
+                new FlipHandler(),
             };
 
         public Image ImageProcessing(string fileName, Operation operation, params object[] args)
