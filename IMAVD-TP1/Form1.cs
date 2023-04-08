@@ -396,6 +396,17 @@ namespace IMAVD_TP1
             }
             else Logger.WarnToLoadImage();
         }
+
+        private void resetFlipBtn_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+
+            if (this.imageBox.Image != null)
+            {
+                this.transformedImageBox.Image = this.imageBox.Image;
+            }
+            else Logger.WarnToLoadImage();
+        }
         #endregion
 
         #region Crop Image

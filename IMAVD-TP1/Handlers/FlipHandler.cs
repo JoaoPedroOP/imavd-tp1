@@ -15,7 +15,7 @@ namespace IMAVD_TP1.Handlers
         private bool Value;
         public bool CanHandle(Operation operation, params object[] args)
         {
-            if (operation == Operation.Gamma && bool.TryParse(args[0].ToString(), out bool value))
+            if (operation == Operation.Flip && bool.TryParse(args[0].ToString(), out bool value))
             {
                 this.Value = value;
 

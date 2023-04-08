@@ -97,12 +97,13 @@
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.addImageOverImageBtn = new System.Windows.Forms.Button();
             this.addTextOverImageBtn = new System.Windows.Forms.Button();
-            this.selectAreaBtn = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.flipVerticallyBtn = new System.Windows.Forms.Button();
             this.flipHorizontalBtn = new System.Windows.Forms.Button();
+            this.selectAreaBtn = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.cropBtn = new System.Windows.Forms.Button();
+            this.resetFlipBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.menuStrip2.SuspendLayout();
@@ -886,25 +887,14 @@
             this.addTextOverImageBtn.UseVisualStyleBackColor = true;
             this.addTextOverImageBtn.Click += new System.EventHandler(this.addTextOverImageBtn_Click);
             // 
-            // selectAreaBtn
-            // 
-            this.selectAreaBtn.BackColor = System.Drawing.SystemColors.Control;
-            this.selectAreaBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.selectAreaBtn.Location = new System.Drawing.Point(9, 19);
-            this.selectAreaBtn.Name = "selectAreaBtn";
-            this.selectAreaBtn.Size = new System.Drawing.Size(166, 50);
-            this.selectAreaBtn.TabIndex = 2;
-            this.selectAreaBtn.Text = "Select Area";
-            this.selectAreaBtn.UseVisualStyleBackColor = false;
-            this.selectAreaBtn.Click += new System.EventHandler(this.selectAreaBtn_Click);
-            // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.resetFlipBtn);
             this.groupBox11.Controls.Add(this.flipVerticallyBtn);
             this.groupBox11.Controls.Add(this.flipHorizontalBtn);
             this.groupBox11.Location = new System.Drawing.Point(284, 21);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(285, 46);
+            this.groupBox11.Size = new System.Drawing.Size(370, 46);
             this.groupBox11.TabIndex = 3;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Flip";
@@ -929,6 +919,18 @@
             this.flipHorizontalBtn.UseVisualStyleBackColor = true;
             this.flipHorizontalBtn.Click += new System.EventHandler(this.flipHorizontalBtn_Click);
             // 
+            // selectAreaBtn
+            // 
+            this.selectAreaBtn.BackColor = System.Drawing.SystemColors.Control;
+            this.selectAreaBtn.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.selectAreaBtn.Location = new System.Drawing.Point(9, 19);
+            this.selectAreaBtn.Name = "selectAreaBtn";
+            this.selectAreaBtn.Size = new System.Drawing.Size(166, 50);
+            this.selectAreaBtn.TabIndex = 2;
+            this.selectAreaBtn.Text = "Select Area";
+            this.selectAreaBtn.UseVisualStyleBackColor = false;
+            this.selectAreaBtn.Click += new System.EventHandler(this.selectAreaBtn_Click);
+            // 
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.cropBtn);
@@ -948,6 +950,16 @@
             this.cropBtn.Text = "Crop";
             this.cropBtn.UseVisualStyleBackColor = true;
             this.cropBtn.Click += new System.EventHandler(this.cropBtn_Click);
+            // 
+            // resetFlipBtn
+            // 
+            this.resetFlipBtn.Location = new System.Drawing.Point(275, 13);
+            this.resetFlipBtn.Name = "resetFlipBtn";
+            this.resetFlipBtn.Size = new System.Drawing.Size(75, 23);
+            this.resetFlipBtn.TabIndex = 2;
+            this.resetFlipBtn.Text = "Reset";
+            this.resetFlipBtn.UseVisualStyleBackColor = true;
+            this.resetFlipBtn.Click += new System.EventHandler(this.resetFlipBtn_Click);
             // 
             // UI
             // 
@@ -1079,6 +1091,7 @@
         private System.Windows.Forms.Button selectAreaBtn;
         private System.Windows.Forms.Button addImageOverImageBtn;
         private System.Windows.Forms.Button addTextOverImageBtn;
+        private System.Windows.Forms.Button resetFlipBtn;
     }
 }
 
