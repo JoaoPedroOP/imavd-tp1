@@ -1,6 +1,7 @@
 ﻿using IMAVD_TP1.DTO;
 using IMAVD_TP1.Enums;
 using IMAVD_TP1.Helpers;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -532,7 +533,38 @@ namespace IMAVD_TP1
 
         private void addTextOverImageBtn_Click(object sender, EventArgs e)
         {
-            //TODO
+            saveLastImageStatus();
+
+            if (rectW != 0 && rectH != 0)
+            {
+                string input = Interaction.InputBox("Enter your text:", "Add Text to Image", "");
+
+                Bitmap transform = new Bitmap(transformedImageBox.Image);
+
+                using (Graphics g = Graphics.FromImage(transform))
+                {
+                    Font font = new Font("Arial", 30);
+                    Brush brush = new SolidBrush(Color.Black);
+
+                    g.DrawString(input, font, brush, crpX * 2, crpY * 2);
+                }
+
+                transformedImageBox.Image = transform;
+
+                //Reset Graphics
+                imageBox.Refresh();
+                selectAreaBtn.BackColor = SystemColors.Control;
+                isSelectMode = false;
+                crpX = 0;
+                crpY = 0;
+                rectW = 0;
+                rectH = 0;
+            }
+            else
+            {
+                Logger.WarnToSelectArea();
+            }
+
         }
 
         private void addImageOverImageBtn_Click(object sender, EventArgs e)
@@ -555,9 +587,10 @@ namespace IMAVD_TP1
                     {
                         g.DrawImage(transform, new Point(0, 0));
 
-                        g.DrawImage(fileImage, new Rectangle(groupBox8.Location.X + transformedImageBox.Location.X + crpX, groupBox8.Location.Y + transformedImageBox.Location.Y + crpY, rectW*2, rectH*2));
+                        g.DrawImage(fileImage, new Rectangle(crpX*2, crpY*2, rectW*2, rectH*2));
                     }
                     transformedImageBox.Image = mergedImage;
+
                     //Reset Graphics
                     imageBox.Refresh();
                     selectAreaBtn.BackColor = SystemColors.Control;
