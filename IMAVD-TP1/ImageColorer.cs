@@ -5,7 +5,7 @@ namespace IMAVD_TP1
 {
     internal class ImageColorer
     {
-        internal static Bitmap transform(Image originalImage,String option)
+        internal static Bitmap transform(Image originalImage,String option,Color color)
         {
             var resultBitmap = new Bitmap(originalImage.Width, originalImage.Height);
 
@@ -40,6 +40,21 @@ namespace IMAVD_TP1
                     if (option == "InvertColors")
                     {
                         resultBitmap.SetPixel(x, y, Color.FromArgb(pixelAlpha, 255-pixelRed, 255-pixelGreen, 255-pixelBlue));
+                    }
+                    if(option == "Customize")
+                    {
+                        int redDiff = Math.Abs(pixelRed - color.R);
+                        int greenDiff = Math.Abs(pixelGreen - color.G);
+                        int blueDiff = Math.Abs(pixelBlue - color.B);
+
+                        if (redDiff <= 100 && greenDiff <= 100 && blueDiff <= 100) // change the threshold value as needed
+                        {
+                            resultBitmap.SetPixel(x, y, Color.FromArgb(pixelAlpha, 255 - pixelRed, 255 - pixelGreen, 255 - pixelBlue));
+                        }
+                        else
+                        {
+                            resultBitmap.SetPixel(x, y, Color.FromArgb(pixelAlpha, pixelRed, pixelGreen, pixelBlue));
+                        }
                     }
                 }
             }

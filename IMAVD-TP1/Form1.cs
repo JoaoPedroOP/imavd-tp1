@@ -146,7 +146,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red");
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red",new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -156,7 +156,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Green");
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Green", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -166,7 +166,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Blue");
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Blue",new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -202,7 +202,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors");
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors",new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -592,6 +592,24 @@ namespace IMAVD_TP1
                 this.transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 this.duplicatedVerticalImage = newImage;
                 this.transformedImageBox.Image = newImage;
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void customizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+            if (this.imageBox.Image != null)
+            {
+              if (colorSearchDialog.ShowDialog() == DialogResult.OK){
+                    Color selectedColor = colorSearchDialog.Color;
+                    if (selectedColor != null){
+                        this.transformedImageBox.Image = ImageColorer.transform(
+                        this.imageBox.Image,
+                        "Customize",selectedColor
+                        );
+                    }
+                }
             }
             else Logger.WarnToLoadImage();
         }
