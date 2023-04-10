@@ -116,7 +116,7 @@ namespace IMAVD_TP1
             var bm = new Bitmap(img, img.Width + (img.Width * size.Width / 10),
                 img.Height + (img.Height * size.Height / 10));
             var gpu = Graphics.FromImage(bm);
-            gpu.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            gpu.InterpolationMode = InterpolationMode.HighQualityBicubic;
             return bm;
         }
 
@@ -126,12 +126,16 @@ namespace IMAVD_TP1
 
             if (this.imageBox.Image != null)
             {
-                if (zoomBar.Value >= 0)
+                if (zoomBar.Value > 0)
                 {
                     this.transformedImageBox.SizeMode = PictureBoxSizeMode.CenterImage;
                     this.transformedImageBox.Image = ZoomPicture(
                         this.originalImage,
                         new Size(zoomBar.Value, zoomBar.Value));
+                }
+                else
+                {
+                    this.transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
             }
             else Logger.WarnToLoadImage();
@@ -558,9 +562,9 @@ namespace IMAVD_TP1
                         g.DrawImage(image, i * image.Width, 0);
                     }
                 }
-                transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                duplicatedHorizontalImage = newImage;
-                transformedImageBox.Image = newImage;
+                this.transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                this.duplicatedHorizontalImage = newImage;
+                this.transformedImageBox.Image = newImage;
             }
             else Logger.WarnToLoadImage();
         }
@@ -585,9 +589,9 @@ namespace IMAVD_TP1
                     }
                 }
 
-                transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                duplicatedVerticalImage = newImage;
-                transformedImageBox.Image = newImage;
+                this.transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                this.duplicatedVerticalImage = newImage;
+                this.transformedImageBox.Image = newImage;
             }
             else Logger.WarnToLoadImage();
         }
