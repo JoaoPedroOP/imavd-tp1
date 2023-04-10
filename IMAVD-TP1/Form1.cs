@@ -5,6 +5,8 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
@@ -16,6 +18,8 @@ namespace IMAVD_TP1
         private ColorSearchDTO colorSearchInfo;
         private string fileName;
         private ImageProcessor imageProcessor = new ImageProcessor();
+        private Bitmap duplicatedVerticalImage;
+        private Bitmap duplicatedHorizontalImage;
 
         //undo settings
         private List<Image> transformedImageStatus = new List<Image>();
@@ -534,6 +538,60 @@ namespace IMAVD_TP1
             base.OnMouseEnter(e);
             Cursor = Cursors.Default;
         }
+
+        private void duplicateHorizontal_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.originalImage != null)
+            {
+                var image = this.originalImage;
+
+                if (this.duplicatedVerticalImage != null)
+                {
+                    image = this.duplicatedVerticalImage;
+                }
+                var newImage = new Bitmap(image.Width * (int)this.duplicateHorizontal.Value, image.Height);
+
+                using (Graphics g = Graphics.FromImage(newImage))
+                {
+                    for (int i = 0; i < this.duplicateHorizontal.Value; i++)
+                    {
+                        g.DrawImage(image, i * image.Width, 0);
+                    }
+                }
+                transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                duplicatedHorizontalImage = newImage;
+                transformedImageBox.Image = newImage;
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void duplicateVertical_ValueChanged(object sender, EventArgs e)
+        {
+            if (this.originalImage != null)
+            {
+                var image = this.originalImage;
+
+                if (this.duplicatedHorizontalImage != null)
+                {
+                    image = this.duplicatedHorizontalImage;
+                }
+                Bitmap newImage = new Bitmap(image.Width, image.Height * (int)this.duplicateVertical.Value);
+
+                using (Graphics g = Graphics.FromImage(newImage))
+                {
+                    for (int i = 0; i < (int)this.duplicateVertical.Value; i++)
+                    {
+                        g.DrawImage(image, 0, i * image.Height);
+                    }
+                }
+
+                transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                duplicatedVerticalImage = newImage;
+                transformedImageBox.Image = newImage;
+            }
+            else Logger.WarnToLoadImage();
+        }
+
         #endregion
 
         #region Add text or image 
@@ -598,7 +656,7 @@ namespace IMAVD_TP1
                     {
                         g.DrawImage(transform, new Point(0, 0));
 
-                        g.DrawImage(fileImage, new Rectangle(crpX*2, crpY*2, rectW*2, rectH*2));
+                        g.DrawImage(fileImage, new Rectangle(crpX, crpY, rectW, rectH));
                     }
                     transformedImageBox.Image = mergedImage;
 
