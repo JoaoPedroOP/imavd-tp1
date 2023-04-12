@@ -146,7 +146,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red",new Color());
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -166,7 +166,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Blue",new Color());
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Blue", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -202,7 +202,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors",new Color());
+                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -478,7 +478,7 @@ namespace IMAVD_TP1
                     isSelectMode = true;
                     selectAreaBtn.BackColor = Color.LightGreen;
 
-                    
+
                 }
                 else
                 {
@@ -601,12 +601,14 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-              if (colorSearchDialog.ShowDialog() == DialogResult.OK){
+                if (colorSearchDialog.ShowDialog() == DialogResult.OK)
+                {
                     Color selectedColor = colorSearchDialog.Color;
-                    if (selectedColor != null){
+                    if (selectedColor != null)
+                    {
                         this.transformedImageBox.Image = ImageColorer.transform(
                         this.imageBox.Image,
-                        "Customize",selectedColor
+                        "Customize", selectedColor
                         );
                     }
                 }
@@ -700,6 +702,110 @@ namespace IMAVD_TP1
         }
 
 
+        #endregion
+
+        #region ChromaKey
+
+        private Color? pixelColor = null;
+        private int tolerance;
+        private bool inChromaKeyMode = false;
+
+        private void imageBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                int x = e.X;
+                int y = e.Y;
+
+                pixelColor = null;
+
+                pixelColor = ((Bitmap)imageBox.Image).GetPixel(x, y);
+                eyeDropperBtn.BackColor = pixelColor.Value;
+                imageBox.MouseMove -= new MouseEventHandler(imageBox_MouseMove2);
+            }
+        }
+
+        private void imageBox_MouseMove2(object sender, MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            int x = e.X;
+            int y = e.Y;
+
+            Bitmap bitmap = imageBox.Image as Bitmap;
+            if (bitmap != null && x >= 0 && x < bitmap.Width && y >= 0 && y < bitmap.Height)
+            {
+                pixelColor = bitmap.GetPixel(x, y);
+                eyeDropperBtn.BackColor = pixelColor.Value;
+            }
+            else
+            {
+                pixelColor = null;
+            }
+        }
+
+        private void toleranceCK_ValueChanged(object sender, EventArgs e)
+        {
+            tolerance = (int)this.toleranceCK.Value;
+        }
+
+        private void eyeDropperBtn_Click(object sender, EventArgs e)
+        {
+            if (this.imageBox.Image != null)
+            {
+                if (!inChromaKeyMode)
+                {
+                    imageBox.Refresh();
+                    inChromaKeyMode = true;
+                    imageBox.MouseMove += new MouseEventHandler(imageBox_MouseMove2);
+                    imageBox.MouseClick += new MouseEventHandler(imageBox_MouseClick);
+                }
+                else Logger.AlreadyInChromaKey();
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private void chromaKeyBtn_Click(object sender, EventArgs e)
+        {
+            saveLastImageStatus();
+            if (this.imageBox.Image != null)
+            {
+                if (inChromaKeyMode)
+                {
+                    imageBox.MouseMove -= new MouseEventHandler(imageBox_MouseMove2);
+                    imageBox.MouseClick -= new MouseEventHandler(imageBox_MouseClick);
+
+                    Bitmap originalImage = new Bitmap(imageBox.Image);
+                    var newImage = EnableChromaKey(originalImage, pixelColor.Value, tolerance);
+                    transformedImageBox.Image = newImage;
+                    inChromaKeyMode = false;
+                    eyeDropperBtn.BackColor = Color.Transparent;
+                }
+                else Logger.NoChromaKeySelected();
+
+            }
+            else Logger.WarnToLoadImage();
+        }
+
+        private Bitmap EnableChromaKey(Bitmap bitmap, Color color, int tolerance)
+        {
+            Bitmap transparentImage = new Bitmap(bitmap);
+
+            for (int i = transparentImage.Size.Width - 1; i >= 0; i--)
+            {
+                for (int j = transparentImage.Size.Height - 1; j >= 0; j--)
+                {
+                    var currentColor = transparentImage.GetPixel(i, j);
+                    if (Math.Abs(color.R - currentColor.R) < tolerance &&
+                      Math.Abs(color.G - currentColor.G) < tolerance &&
+                      Math.Abs(color.B - currentColor.B) < tolerance)
+                        transparentImage.SetPixel(i, j, color);
+                }
+            }
+
+            transparentImage.MakeTransparent(color);
+            return transparentImage;
+        }
         #endregion
     }
 }
