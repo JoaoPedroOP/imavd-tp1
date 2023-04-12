@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace IMAVD_TP1
 {
@@ -41,7 +36,7 @@ namespace IMAVD_TP1
         {
             var resultBitmap = new Bitmap(originalImage.Width, originalImage.Height);
 
-            using (Graphics graphics = Graphics.FromImage(resultBitmap))
+            using (var graphics = Graphics.FromImage(resultBitmap))
             {
                 graphics.DrawImage(originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height));
             }
