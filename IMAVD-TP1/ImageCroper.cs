@@ -36,19 +36,20 @@ namespace IMAVD_TP1
         {
             var resultBitmap = new Bitmap(originalImage.Width, originalImage.Height);
 
-            using (var graphics = Graphics.FromImage(resultBitmap))
+            using (Graphics graphics = Graphics.FromImage(resultBitmap))
             {
                 graphics.DrawImage(originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height));
             }
 
-            int pixelsErased = originalImage.Width;
-            for (var y = originalImage.Height; y >= 0; y--)
+            int notErasingCollumBits = 0;
+
+            for (var y = 0; y < resultBitmap.Height - 1; y++)
             {
-                for (var x = originalImage.Width; x >= originalImage.Width-pixelsErased; x--)
+                for (var x = 0; x < resultBitmap.Width - 1 - notErasingCollumBits; x++)
                 {
                     resultBitmap.SetPixel(x, y, Color.FromArgb(0, 0, 0, 0));
                 }
-                pixelsErased += originalImage.Width / originalImage.Height;
+                notErasingCollumBits += resultBitmap.Height / resultBitmap.Width;
             }
 
             return resultBitmap;

@@ -149,7 +149,7 @@ namespace IMAVD_TP1
                     Color selectedColor = pixelColor.Value;
                     if (selectedColor != null)
                     {
-                        colorSearchInfo = ImageSearcher.searchColor(this.imageBox.Image, selectedColor);
+                        colorSearchInfo = ImageSearcher.searchColor(this.transformedImageBox.Image, selectedColor);
 
                         colorExistsLabel.Visible = true;
                         if (colorSearchInfo.colorExists)
@@ -162,7 +162,10 @@ namespace IMAVD_TP1
                         nrPixelsWithColorLabel.Text = colorSearchInfo.numberOfSameColorPixels.ToString();
                     }
 
-                }else Logger.NoChromaKeySelected();
+                    inChromaKeyMode = false;
+                    eyeDropperBtn.BackColor = Color.Transparent;
+                }
+                else Logger.NoChromaKeySelected();
 
             }
             else Logger.WarnToLoadImage();
@@ -403,6 +406,13 @@ namespace IMAVD_TP1
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = this.imageBox.Image;
+                this.duplicateVertical.Value = 1;
+                this.duplicateHorizontal.Value = 1;
+                this.zoomBar.Value = 0;
+                this.transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                this.brightBar.Value = 0;
+                this.contrastBar.Value = 0;
+                this.rotationBar.Value = 0;
             }
             else Logger.WarnToLoadImage();
         }
@@ -535,22 +545,36 @@ namespace IMAVD_TP1
         private void duplicateVertical_ValueChanged(object sender, EventArgs e)
         {
             saveLastImageStatus();
-            RenderDuplicateHorizontalVerticalImage();
+            if (this.originalImage != null)
+            {
+                var image = (Bitmap)this.transformedImageBox.Image;
+
+                var newImage = new Bitmap(image.Width, image.Height * (int)this.duplicateVertical.Value);
+
+                using (var g = Graphics.FromImage(newImage))
+                {
+                    for (int i = 0; i < this.duplicateHorizontal.Value; i++)
+                    {
+                        for (int j = 0; j < (int)this.duplicateVertical.Value; j++)
+                        {
+                            g.DrawImage(image, i * image.Width, j * image.Height);
+                        }
+                    }
+                }
+                this.transformedImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                this.transformedImageBox.Image = newImage;
+            }
+            else Logger.WarnToLoadImage();
         }
 
         private void duplicateHorizontal_ValueChanged(object sender, EventArgs e)
         {
             saveLastImageStatus();
-            RenderDuplicateHorizontalVerticalImage();
-        }
-
-        private void RenderDuplicateHorizontalVerticalImage()
-        {
             if (this.originalImage != null)
             {
                 var image = (Bitmap)this.transformedImageBox.Image;
 
-                var newImage = new Bitmap(image.Width * (int)this.duplicateHorizontal.Value, image.Height * (int)this.duplicateVertical.Value);
+                var newImage = new Bitmap(image.Width * (int)this.duplicateHorizontal.Value, image.Height);
 
                 using (var g = Graphics.FromImage(newImage))
                 {
