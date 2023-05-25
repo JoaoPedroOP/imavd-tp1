@@ -202,6 +202,8 @@ namespace IMAVD_TP1
 
         private void rotationBar_Scroll(object sender, EventArgs e)
         {
+            saveLastImageStatus();
+
             if (this.originalImage != null)
             {
                 var image = ImageToByte(this.transformedImageBox.Image);
@@ -215,6 +217,8 @@ namespace IMAVD_TP1
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            saveLastImageStatus();
+
             if (this.originalImage != null)
             {
                 var image = ImageToByte(this.transformedImageBox.Image);
@@ -318,7 +322,7 @@ namespace IMAVD_TP1
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageCroper.crop(
-                    this.imageBox.Image, "Four Areas");
+                    this.transformedImageBox.Image, "Four Areas");
             }
             else Logger.WarnToLoadImage();
         }
@@ -329,7 +333,7 @@ namespace IMAVD_TP1
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageCroper.crop(
-                    this.imageBox.Image, "Two Areas");
+                    this.transformedImageBox.Image, "Two Areas");
             }
             else Logger.WarnToLoadImage();
         }
@@ -340,7 +344,7 @@ namespace IMAVD_TP1
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageCroper.crop(
-                    this.imageBox.Image, "Top Left Corner");
+                    this.transformedImageBox.Image, "Top Left Corner");
             }
             else Logger.WarnToLoadImage();
         }
@@ -351,7 +355,7 @@ namespace IMAVD_TP1
             if (this.imageBox.Image != null)
             {
                 this.transformedImageBox.Image = ImageCroper.crop(
-                    this.imageBox.Image, "Low Right Corner");
+                    this.transformedImageBox.Image, "Low Right Corner");
             }
             else Logger.WarnToLoadImage();
 
@@ -530,11 +534,13 @@ namespace IMAVD_TP1
 
         private void duplicateVertical_ValueChanged(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             RenderDuplicateHorizontalVerticalImage();
         }
 
         private void duplicateHorizontal_ValueChanged(object sender, EventArgs e)
         {
+            saveLastImageStatus();
             RenderDuplicateHorizontalVerticalImage();
         }
 
