@@ -15,7 +15,6 @@ namespace IMAVD_TP1
     {
         private Bitmap originalImage;
         private ColorSearchDTO colorSearchInfo;
-        private string fileName;
         private ImageProcessor imageProcessor = new ImageProcessor();
 
         //undo settings
@@ -35,24 +34,12 @@ namespace IMAVD_TP1
 
         private void imgLoadBtn_Click(object sender, EventArgs e)
         {
-            Color fundColorToRemove = new Color();
-            if (chromaKeyOpt.Checked)
-            {
-                fundColorToRemove = chooseColorToRemove();
-            }
-
             this.imageBox.Image = null;
             var openFile = new OpenFileDialog();
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
-                this.fileName = openFile.FileName;
                 var fileImage = new Bitmap(openFile.FileName);
-
-                if (chromaKeyOpt.Checked)
-                {
-                    fileImage = ImageColorer.getImageWithNoColor(fileImage, fundColorToRemove);
-                }
 
                 imageBox.Image = fileImage;
                 this.originalImage = fileImage;
@@ -62,21 +49,6 @@ namespace IMAVD_TP1
             }
             this.canUndo = false;
             this.checkUndoStatus();
-        }
-
-        private Color chooseColorToRemove()
-        {
-            if (colorSearchDialog.ShowDialog() == DialogResult.OK)
-            {
-                Color selectedColor = colorSearchDialog.Color;
-                if (selectedColor != null)
-                {
-                    return selectedColor;
-                }
-            }
-
-            MessageBox.Show("Please select a color!", "Invalid!");
-            return new Color();
         }
 
         private void LoadImageToBeEdited()
@@ -127,7 +99,7 @@ namespace IMAVD_TP1
                 {
                     this.transformedImageBox.SizeMode = PictureBoxSizeMode.CenterImage;
                     this.transformedImageBox.Image = ZoomPicture(
-                        this.originalImage,
+                        (Bitmap)this.transformedImageBox.Image,
                         new Size(zoomBar.Value, zoomBar.Value));
                 }
                 else
@@ -143,7 +115,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Red", new Color());
+                this.transformedImageBox.Image = ImageColorer.transform((Bitmap)this.transformedImageBox.Image, "Red", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -153,7 +125,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Green", new Color());
+                this.transformedImageBox.Image = ImageColorer.transform((Bitmap)this.transformedImageBox.Image, "Green", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -163,7 +135,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "Blue", new Color());
+                this.transformedImageBox.Image = ImageColorer.transform((Bitmap)this.transformedImageBox.Image, "Blue", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -174,7 +146,6 @@ namespace IMAVD_TP1
             {
                 if (inChromaKeyMode)
                 {
-
                     Color selectedColor = pixelColor.Value;
                     if (selectedColor != null)
                     {
@@ -202,7 +173,7 @@ namespace IMAVD_TP1
             saveLastImageStatus();
             if (this.imageBox.Image != null)
             {
-                this.transformedImageBox.Image = ImageColorer.transform(this.imageBox.Image, "InvertColors", new Color());
+                this.transformedImageBox.Image = ImageColorer.transform((Bitmap)this.transformedImageBox.Image, "InvertColors", new Color());
             }
             else Logger.WarnToLoadImage();
         }
@@ -213,8 +184,9 @@ namespace IMAVD_TP1
 
             if (this.imageBox.Image != null)
             {
+                var image = ImageToByte(this.transformedImageBox.Image);
                 this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
-                    this.fileName,
+                    image,
                     Operation.Brightness,
                     this.brightBar.Value);
 
@@ -222,12 +194,19 @@ namespace IMAVD_TP1
             else Logger.WarnToLoadImage();
         }
 
+        public byte[] ImageToByte(System.Drawing.Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+        }
+
         private void rotationBar_Scroll(object sender, EventArgs e)
         {
             if (this.originalImage != null)
             {
+                var image = ImageToByte(this.transformedImageBox.Image);
                 this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
-                    this.fileName,
+                    image,
                     Operation.Rotate,
                     this.rotationBar.Value);
             }
@@ -238,8 +217,10 @@ namespace IMAVD_TP1
         {
             if (this.originalImage != null)
             {
+                var image = ImageToByte(this.transformedImageBox.Image);
+
                 this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
-                    this.fileName,
+                    image,
                     Operation.Gamma,
                     this.numericUpDown1.Value);
             }
@@ -289,8 +270,10 @@ namespace IMAVD_TP1
 
             if (this.imageBox.Image != null)
             {
+               var image = ImageToByte(this.transformedImageBox.Image);
+
                 this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
-                    this.fileName,
+                    image,
                     Operation.Contrast,
                     this.contrastBar.Value);
             }
@@ -383,8 +366,10 @@ namespace IMAVD_TP1
 
             if (this.imageBox.Image != null)
             {
+                var image = ImageToByte(this.transformedImageBox.Image);
+
                 this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
-                    this.fileName,
+                    image,
                     Operation.Flip,
                     false);
             }
@@ -397,15 +382,17 @@ namespace IMAVD_TP1
 
             if (this.imageBox.Image != null)
             {
+                var image = ImageToByte(this.transformedImageBox.Image);
+
                 this.transformedImageBox.Image = this.imageProcessor.ImageProcessing(
-                    this.fileName,
+                    image,
                     Operation.Flip,
                     true);
             }
             else Logger.WarnToLoadImage();
         }
 
-        private void resetFlipBtn_Click(object sender, EventArgs e)
+        private void resetBtn_Click(object sender, EventArgs e)
         {
             saveLastImageStatus();
 
@@ -432,8 +419,8 @@ namespace IMAVD_TP1
             {
                 if (rectW != 0 && rectH != 0)
                 {
-                    Bitmap original = new Bitmap(imageBox.Width, imageBox.Height);
-                    imageBox.DrawToBitmap(original, imageBox.ClientRectangle);
+                    Bitmap original = new Bitmap(transformedImageBox.Width, transformedImageBox.Height);
+                    transformedImageBox.DrawToBitmap(original, transformedImageBox.ClientRectangle);
 
                     Bitmap cropped = new Bitmap(rectW, rectH);
                     for (int i = 0; i < rectW; i++)
@@ -448,7 +435,7 @@ namespace IMAVD_TP1
                     transformedImageBox.SizeMode = PictureBoxSizeMode.CenterImage;
 
                     //Reset Graphics
-                    imageBox.Refresh();
+                    transformedImageBox.Refresh();
                     selectAreaBtn.BackColor = SystemColors.Control;
                     isSelectMode = false;
                     crpX = 0;
@@ -472,15 +459,15 @@ namespace IMAVD_TP1
             {
                 if (!isSelectMode)
                 {
-                    imageBox.MouseDown += new MouseEventHandler(imageBox_MouseDown);
-                    imageBox.MouseMove += new MouseEventHandler(imageBox_MouseMove);
-                    imageBox.MouseEnter += new EventHandler(imageBox_MouseEnter);
+                    transformedImageBox.MouseDown += new MouseEventHandler(imageBox_MouseDown);
+                    transformedImageBox.MouseMove += new MouseEventHandler(imageBox_MouseMove);
+                    transformedImageBox.MouseEnter += new EventHandler(imageBox_MouseEnter);
                     isSelectMode = true;
                     selectAreaBtn.BackColor = Color.LightGreen;
                 }
                 else
                 {
-                    imageBox.Refresh();
+                    transformedImageBox.Refresh();
                     selectAreaBtn.BackColor = SystemColors.Control;
                     isSelectMode = false;
                     crpX = 0;
@@ -516,10 +503,10 @@ namespace IMAVD_TP1
             {
                 if (isSelectMode)
                 {
-                    imageBox.Refresh();
+                    transformedImageBox.Refresh();
                     rectW = e.X - crpX;
                     rectH = e.Y - crpY;
-                    Graphics g = imageBox.CreateGraphics();
+                    Graphics g = transformedImageBox.CreateGraphics();
                     g.DrawRectangle(crpPen, crpX, crpY, rectW, rectH);
                     g.Dispose();
                 }
@@ -555,7 +542,7 @@ namespace IMAVD_TP1
         {
             if (this.originalImage != null)
             {
-                var image = this.originalImage;
+                var image = (Bitmap)this.transformedImageBox.Image;
 
                 var newImage = new Bitmap(image.Width * (int)this.duplicateHorizontal.Value, image.Height * (int)this.duplicateVertical.Value);
 
@@ -586,7 +573,7 @@ namespace IMAVD_TP1
                     if (selectedColor != null)
                     {
                         this.transformedImageBox.Image = ImageColorer.transform(
-                        this.imageBox.Image,
+                        this.transformedImageBox.Image,
                         "Customize", selectedColor
                         );
                     }
@@ -624,7 +611,7 @@ namespace IMAVD_TP1
                 transformedImageBox.Image = transform;
 
                 //Reset Graphics
-                imageBox.Refresh();
+                transformedImageBox.Refresh();
                 selectAreaBtn.BackColor = SystemColors.Control;
                 isSelectMode = false;
                 crpX = 0;
@@ -664,7 +651,7 @@ namespace IMAVD_TP1
                     transformedImageBox.Image = mergedImage;
 
                     //Reset Graphics
-                    imageBox.Refresh();
+                    this.transformedImageBox.Refresh();
                     selectAreaBtn.BackColor = SystemColors.Control;
                     isSelectMode = false;
                     crpX = 0;
@@ -699,9 +686,9 @@ namespace IMAVD_TP1
 
                 pixelColor = null;
 
-                pixelColor = ((Bitmap)imageBox.Image).GetPixel(x, y);
+                pixelColor = ((Bitmap)this.transformedImageBox.Image).GetPixel(x, y);
                 eyeDropperBtn.BackColor = pixelColor.Value;
-                imageBox.MouseMove -= new MouseEventHandler(imageBox_MouseMove2);
+                this.transformedImageBox.MouseMove -= new MouseEventHandler(imageBox_MouseMove2);
             }
         }
 
@@ -711,7 +698,7 @@ namespace IMAVD_TP1
             int x = e.X;
             int y = e.Y;
 
-            Bitmap bitmap = imageBox.Image as Bitmap;
+            Bitmap bitmap = this.transformedImageBox.Image as Bitmap;
             if (bitmap != null && x >= 0 && x < bitmap.Width && y >= 0 && y < bitmap.Height)
             {
                 pixelColor = bitmap.GetPixel(x, y);
@@ -728,21 +715,16 @@ namespace IMAVD_TP1
             tolerance = (int)this.toleranceCK.Value;
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void eyeDropperBtn_Click(object sender, EventArgs e)
         {
-            if (this.imageBox.Image != null)
+            if (this.transformedImageBox.Image != null)
             {
                 if (!inChromaKeyMode)
                 {
-                    imageBox.Refresh();
+                    this.transformedImageBox.Refresh();
                     inChromaKeyMode = true;
-                    imageBox.MouseMove += new MouseEventHandler(imageBox_MouseMove2);
-                    imageBox.MouseClick += new MouseEventHandler(imageBox_MouseClick);
+                    this.transformedImageBox.MouseMove += new MouseEventHandler(imageBox_MouseMove2);
+                    this.transformedImageBox.MouseClick += new MouseEventHandler(imageBox_MouseClick);
                 }
                 else Logger.AlreadyInChromaKey();
             }
@@ -752,14 +734,14 @@ namespace IMAVD_TP1
         private void chromaKeyBtn_Click(object sender, EventArgs e)
         {
             saveLastImageStatus();
-            if (this.imageBox.Image != null)
+            if (this.transformedImageBox.Image != null)
             {
                 if (inChromaKeyMode)
                 {
-                    imageBox.MouseMove -= new MouseEventHandler(imageBox_MouseMove2);
-                    imageBox.MouseClick -= new MouseEventHandler(imageBox_MouseClick);
+                    this.transformedImageBox.MouseMove -= new MouseEventHandler(imageBox_MouseMove2);
+                    this.transformedImageBox.MouseClick -= new MouseEventHandler(imageBox_MouseClick);
 
-                    Bitmap originalImage = new Bitmap(imageBox.Image);
+                    Bitmap originalImage = new Bitmap(this.transformedImageBox.Image);
                     var newImage = EnableChromaKey(originalImage, pixelColor.Value, tolerance);
                     transformedImageBox.Image = newImage;
                     inChromaKeyMode = false;

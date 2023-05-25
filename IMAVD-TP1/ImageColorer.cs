@@ -5,7 +5,7 @@ namespace IMAVD_TP1
 {
     internal class ImageColorer
     {
-        internal static Bitmap transform(Image originalImage,String option,Color color)
+        internal static Bitmap transform(Image originalImage, string option,Color color)
         {
             var resultBitmap = new Bitmap(originalImage.Width, originalImage.Height);
 

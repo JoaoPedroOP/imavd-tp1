@@ -18,10 +18,8 @@ namespace IMAVD_TP1
                 new FlipHandler(),
             };
 
-        public Image ImageProcessing(string fileName, Operation operation, params object[] args)
+        public Image ImageProcessing(byte[] photoBytes, Operation operation, params object[] args)
         {
-            byte[] photoBytes = File.ReadAllBytes(fileName);
-
             using (MemoryStream inStream = new MemoryStream(photoBytes))
             {
                 using (MemoryStream outStream = new MemoryStream())
