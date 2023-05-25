@@ -172,9 +172,10 @@ namespace IMAVD_TP1
         {
             if (this.imageBox.Image != null)
             {
-                if (colorSearchDialog.ShowDialog() == DialogResult.OK)
+                if (inChromaKeyMode)
                 {
-                    Color selectedColor = colorSearchDialog.Color;
+
+                    Color selectedColor = pixelColor.Value;
                     if (selectedColor != null)
                     {
                         colorSearchInfo = ImageSearcher.searchColor(this.imageBox.Image, selectedColor);
@@ -189,7 +190,9 @@ namespace IMAVD_TP1
                         nrPixelsWithColorLabel.Visible = true;
                         nrPixelsWithColorLabel.Text = colorSearchInfo.numberOfSameColorPixels.ToString();
                     }
-                }
+
+                }else Logger.NoChromaKeySelected();
+
             }
             else Logger.WarnToLoadImage();
         }
@@ -723,6 +726,11 @@ namespace IMAVD_TP1
         private void toleranceCK_ValueChanged(object sender, EventArgs e)
         {
             tolerance = (int)this.toleranceCK.Value;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void eyeDropperBtn_Click(object sender, EventArgs e)
